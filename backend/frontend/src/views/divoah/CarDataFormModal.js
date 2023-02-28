@@ -500,6 +500,16 @@ const CarDataFormModal = (match) => {
 				ErrorReason += " ,אם בפירוק / הרכבה ריק \n";
 			}
 		}
+		if (data.typevent === "8") {
+			if (
+				document.getElementById("apidmia").options[
+					document.getElementById("apidmia").selectedIndex
+				].value == "0"
+			) {
+				flag = false;
+				ErrorReason += "סוג אפידמיה ריק \n";
+			}
+		}
 		if (data.typevent === "9") {
 			if (
 				document.getElementById("mholaz").options[
@@ -1241,6 +1251,7 @@ const CarDataFormModal = (match) => {
 															<option value={"5"}>אירועי נשק / תחמושת</option>
 															<option value={"6"}>תאונת עבודה אנשי טנ"א</option>
 															<option value={"7"}>פריקת מטפים</option>
+															<option value={"8"}>אפידמיה</option>
 															<option value={"9"}>חילוץ</option>
 															<option value={"10"}>
 																נזק לתשתיות אחזקה / הח"י
@@ -1329,102 +1340,59 @@ const CarDataFormModal = (match) => {
 																}
 															)}
 
-<div
-														style={{ textAlign: "right", paddingTop: "10px" }}
-													>
-														האם נגרם נזק לכלי
-													</div>
-													<div style={{ textAlign: "right" }}>
-														{data.yn == true ? (
-															<FormGroup
-																check
-																inline
+															<div
+																style={{
+																	textAlign: "right",
+																	paddingTop: "10px",
+																}}
 															>
-																<div
-																	style={{
-																		textAlign: "right",
-																		paddingTop: "10px",
-																	}}
+																האם נגרם נזק לכלי
+															</div>
+															<div style={{ textAlign: "right" }}>
+																<FormGroup
+																	check
+																	inline
 																>
-																	<Input
-																		checked={data.yn == true}
-																		type="radio"
-																		name="yn"
-																		value={true}
-																		onChange={handleChange}
-																		id="YES"
-																	/>
-																	כן
-																</div>
-															</FormGroup>
-														) : (
-															<FormGroup
-																check
-																inline
-															>
-																<div
-																	style={{
-																		textAlign: "right",
-																		paddingTop: "10px",
-																	}}
-																>
-																	<Input
-																		type="radio"
-																		name="yn"
-																		value={true}
-																		onChange={handleChange}
-																		id="YES"
-																	/>
-																	כן
-																</div>
-															</FormGroup>
-														)}
+																	<div
+																		style={{
+																			textAlign: "right",
+																			paddingTop: "10px",
+																		}}
+																	>
+																		<Input
+																			checked={data.yn == true}
+																			type="radio"
+																			name="yn"
+																			value={true}
+																			onChange={handleChange}
+																			id="YES"
+																		/>
+																		כן
+																	</div>
+																</FormGroup>
 
-														{data.yn == false ? (
-															<FormGroup
-																check
-																inline
-															>
-																<div
-																	style={{
-																		textAlign: "right",
-																		paddingTop: "10px",
-																	}}
+																<FormGroup
+																	check
+																	inline
 																>
-																	<Input
-																		checked={data.yn == false}
-																		type="radio"
-																		id="NO"
-																		name="yn"
-																		value={false}
-																		onChange={handleChange}
-																	/>
-																	לא
-																</div>
-															</FormGroup>
-														) : (
-															<FormGroup
-																check
-																inline
-															>
-																<div
-																	style={{
-																		textAlign: "right",
-																		paddingTop: "10px",
-																	}}
-																>
-																	<Input
-																		type="radio"
-																		id="NO"
-																		name="yn"
-																		value={false}
-																		onChange={handleChange}
-																	/>
-																	לא
-																</div>
-															</FormGroup>
-														)}
-													</div>
+																	<div
+																		style={{
+																			textAlign: "right",
+																			paddingTop: "10px",
+																		}}
+																	>
+																		<Input
+																			checked={data.yn == false}
+																			type="radio"
+																			id="NO"
+																			name="yn"
+																			value={false}
+																			onChange={handleChange}
+																		/>
+																		לא
+																	</div>
+																</FormGroup>
+															</div>
 														</>
 													)}
 
@@ -1881,6 +1849,34 @@ const CarDataFormModal = (match) => {
 														</>
 													)}
 
+													{/* אפידמיה */}
+
+													{data.typevent === "8" && (
+														<>
+															<div
+																style={{
+																	textAlign: "right",
+																	paddingTop: "10px",
+																}}
+															>
+																סוג האפידמיה
+															</div>
+															<FormGroup>
+																<Input
+																	type="select"
+																	name="apitype"
+																	value={data.apitype}
+																	onChange={handleChange}
+																	id="apidmia"
+																>
+																	<option value={"0"}>בחר</option>
+																	<option value={"1"}>תפעולית</option>
+																	<option value={"2"}>אחזקתית</option>
+																</Input>
+															</FormGroup>
+														</>
+													)}
+
 													{/*//* -------------- חילוץ  ----------*/}
 
 													{data.typevent === "9" && (
@@ -2181,32 +2177,9 @@ const CarDataFormModal = (match) => {
 																ללא נפגעים
 															</div>
 														</FormGroup>
-
-														<FormGroup
-															check
-															inline
-														>
-															<div
-																style={{
-																	textAlign: "right",
-																	paddingTop: "10px",
-																}}
-															>
-																<Input
-																	// placeholder="הוסף נפגעים"
-																	checked={data.nifga == 2}
-																	name="nifga"
-																	type="radio"
-																	value="2"
-																	onChange={handleChange}
-																/>
-																לא ידוע
-															</div>
-														</FormGroup>
-
 													</div>
 
-													{data.nifga === "1" && (
+													{data.nifga > "0" && (
 														<>
 															<div>
 																{infohurtarray.length == 0 ? (
@@ -2318,9 +2291,6 @@ const CarDataFormModal = (match) => {
 																									<option value={"מת"}>
 																										{"מת"}
 																									</option>
-																									<option value={"לא ידוע"}>
-																										{"לא ידוע"}
-																									</option>
 																								</Input>
 																							</div>
 																						</Col>
@@ -2358,7 +2328,6 @@ const CarDataFormModal = (match) => {
 																									value={p.mikomhurt}
 																									type="number"
 																									placeholder="0"
-																									min="0"
 																								/>
 																							</div>
 																						</Col>
@@ -2804,8 +2773,8 @@ const CarDataFormModal = (match) => {
 															<option value={"0"}>בחר</option>
 															<option value={"1"}>תאונה</option>
 															<option value={"2"}>כשל טכני</option>
-															<option value={"3"}>טעות אנוש</option>
-															<option value={"4"}>לא ידוע</option>
+															<option value={"4"}>טעות אנוש</option>
+															<option value={"3"}>לא ידוע</option>
 														</Input>
 													</FormGroup>
 
@@ -3089,32 +3058,9 @@ const CarDataFormModal = (match) => {
 																ללא נפגעים
 															</div>
 														</FormGroup>
-
-														<FormGroup
-															check
-															inline
-														>
-															<div
-																style={{
-																	textAlign: "right",
-																	paddingTop: "10px",
-																}}
-															>
-																<Input
-																	// placeholder="הוסף נפגעים"
-																	checked={data.nifga == 2}
-																	name="nifga"
-																	type="radio"
-																	value="2"
-																	onChange={handleChange}
-																/>
-																לא ידוע
-															</div>
-														</FormGroup>
-
 													</div>
 
-													{data.nifga === "1" && (
+													{data.nifga > "0" && (
 														<>
 															<div>
 																{infohurtarray.length == 0 ? (
@@ -3226,9 +3172,6 @@ const CarDataFormModal = (match) => {
 																									<option value={"מת"}>
 																										{"מת"}
 																									</option>
-																									<option value={"לא ידוע"}>
-																										{"לא ידוע"}
-																									</option>
 																								</Input>
 																							</div>
 																						</Col>
@@ -3266,7 +3209,6 @@ const CarDataFormModal = (match) => {
 																									value={p.mikomhurt}
 																									type="number"
 																									placeholder="0"
-																									min="0"
 																								/>
 																							</div>
 																						</Col>

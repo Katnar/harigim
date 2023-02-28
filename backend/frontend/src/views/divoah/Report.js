@@ -577,6 +577,16 @@ const Report = ({ match }) => {
 				ErrorReason += " ,אם בפירוק / הרכבה ריק \n";
 			}
 		}
+		if (data.typevent === "8") {
+			if (
+				document.getElementById("apidmia").options[
+					document.getElementById("apidmia").selectedIndex
+				].value == "0"
+			) {
+				flag = false;
+				ErrorReason += "סוג אפידמיה ריק \n";
+			}
+		}
 		if (data.typevent === "9") {
 			// if (
 			// 	document.getElementById("mholaz").options[
@@ -1186,6 +1196,7 @@ const Report = ({ match }) => {
 											<option value={"5"}>אירועי נשק / תחמושת</option>
 											<option value={"6"}>תאונת עבודה אנשי טנ"א</option>
 											<option value={"7"}>פריקת מטפים</option>
+											<option value={"8"}>אפידמיה</option>
 											<option value={"9"}>חילוץ</option>
 											<option value={"10"}>נזק לתשתיות אחזקה / הח"י</option>
 											<option value={"11"}>אי קיום שגרת אחזקה</option>
@@ -1693,6 +1704,29 @@ const Report = ({ match }) => {
 										</>
 									)}
 
+									{/* אפידמיה */}
+
+									{data.typevent === "8" && (
+										<>
+											<div style={{ textAlign: "right", paddingTop: "10px" }}>
+												סוג האפידמיה
+											</div>
+											<FormGroup>
+												<Input
+													type="select"
+													name="apitype"
+													value={data.apitype}
+													onChange={handleChange}
+													id="apidmia"
+												>
+													<option value={"0"}>בחר</option>
+													<option value={"1"}>תפעולית</option>
+													<option value={"2"}>אחזקתית</option>
+												</Input>
+											</FormGroup>
+										</>
+									)}
+
 									{/* //* ------ חילוץ  --------------*/}
 
 									{data.typevent === "9" && (
@@ -1955,26 +1989,9 @@ const Report = ({ match }) => {
 												ללא נפגעים
 											</div>
 										</FormGroup>
-
-										<FormGroup
-											check
-											inline
-										>
-											<div style={{ textAlign: "right", paddingTop: "10px" }}>
-												<Input
-													// placeholder="הוסף נפגעים"
-													name="nifga"
-													type="radio"
-													value="2"
-													onChange={handleChange}
-												/>
-												לא ידוע
-											</div>
-										</FormGroup>
-
 									</div>
 
-									{data.nifga === "1" && (
+									{data.nifga > "0" && (
 										<>
 											<div>
 												{infohurtarray.length == 0 ? (
@@ -2063,9 +2080,6 @@ const Report = ({ match }) => {
 																					</option>
 																					<option value={"קשה"}>{"קשה"}</option>
 																					<option value={"מת"}>{"מת"}</option>
-																					<option value={"לא ידוע"}>
-																						{"לא ידוע"}
-																					</option>
 																				</Input>
 																			</div>
 																		</Col>
@@ -2096,7 +2110,6 @@ const Report = ({ match }) => {
 																					value={p.mikomhurt}
 																					type="number"
 																					placeholder="0"
-																					min="0"
 																				/>
 																			</div>
 																		</Col>

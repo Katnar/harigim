@@ -543,7 +543,7 @@ const AdminSignInForm = (props) => {
 		datasets: [
 			{
 				label: "# of Votes",
-				data: sumogda(arryogda, reportDBFillter),
+				data: sumogda(arryogda, reportDB),
 				backgroundColor: [
 					"rgba(255, 99, 132, 1)",
 					"rgba(54, 162, 235, 1)",
@@ -590,7 +590,7 @@ const AdminSignInForm = (props) => {
 		datasets: [
 			{
 				label: "# of Votes",
-				data: sumhativa(arryhativa, reportDBFillter),
+				data: sumhativa(arryhativa, reportDB),
 				backgroundColor: [
 					"rgba(255, 99, 132, 1)",
 					"rgba(54, 162, 235, 1)",
@@ -641,7 +641,7 @@ const AdminSignInForm = (props) => {
 		datasets: [
 			{
 				label: "# of Votes",
-				data: sumgdod(arrygdod, reportDBFillter),
+				data: sumgdod(arrygdod, reportDB),
 				backgroundColor: randomcolor(arrygdod),
 				borderColor: ["rgba(200, 200, 200, 0.75)"],
 				borderWidth: 1,
@@ -650,44 +650,15 @@ const AdminSignInForm = (props) => {
 	};
 	//todo:
 	//! to try to use this use effect for reportDBOgda and so on
-
-	function reportDBFl(report, dataUnit, unit) {
-		props.theme == "white-content"
-			? setReportDFillter(
-					report.filter((rp) =>
-						unit == "pikod"
-							? dataUnit.includes(rp.pikod)
-							: unit == "ogda"
-							? dataUnit.includes(rp.ogda)
-							: unit == "hativa"
-							? dataUnit.includes(rp.hativa)
-							: dataUnit.includes(rp.gdod)
-					)
-			  )
-			: setReportDFillter(
-					report.filter((rp) =>
-						unit == "pikod"
-							? dataUnit.includes(rp.pikodrep)
-							: unit == "ogda"
-							? dataUnit.includes(rp.ogdarep)
-							: unit == "hativa"
-							? dataUnit.includes(rp.hativarep)
-							: dataUnit.includes(rp.gdodrep)
-					)
-			  );
-	}
-
 	useEffect(() => {
 		try {
-			data.pikod.length > 0
-				? reportDBFl(reportDB, data.pikod, "pikod")
-				: data.ogda.length > 0
-				? reportDBFl(reportDB, data.ogda, "ogda")
-				: data.hativa.length > 0
-				? reportDBFl(reportDB, data.hativa, "hativa")
-				: reportDBFl(reportDB, data.gdod, "gdod");
-			console.log(reportDBFillter.length);
-
+			props.theme == "white-content"
+				? setReportDFillter(
+						reportDB.filter((report) => data.pikod.includes(report.pikod))
+				  )
+				: setReportDFillter(
+						reportDB.filter((report) => data.pikod.includes(report.pikodrep))
+				  );
 			// console.log(reportDBPikod.length);
 		} catch (error) {
 			setReportDFillter(reportDB);

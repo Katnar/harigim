@@ -1503,32 +1503,8 @@ const CarDataFormModalHatal = (match) => {
 															ללא נפגעים
 														</div>
 													</FormGroup>
-
-													<FormGroup
-														check
-														inline
-													>
-														<div
-															style={{
-																textAlign: "right",
-																paddingTop: "10px",
-															}}
-														>
-															<Input
-																checked={data.nifga == 2}
-																// placeholder="הוסף נפגעים"
-																name="nifga"
-																type="radio"
-																value="2"
-																onChange={handleChange}
-																disabled
-															/>
-															לא ידוע
-														</div>
-													</FormGroup>
-
 												</div>
-												{data.nifga === "1" && (
+												{data.nifga > "0" && (
 													<>
 														<div>
 															{infohurtarray.length == 0 ? (
@@ -1673,7 +1649,6 @@ const CarDataFormModalHatal = (match) => {
 																								value={p.mikomhurt}
 																								type="number"
 																								placeholder="0"
-																								min="0"
 																							/>
 																						</div>
 																					</Col>

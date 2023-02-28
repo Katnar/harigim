@@ -896,6 +896,7 @@ const CarDataFormModalView = (match) => {
 															<option value={"5"}>אירועי נשק / תחמושת</option>
 															<option value={"6"}>תאונת עבודה אנשי טנ"א</option>
 															<option value={"7"}>פריקת מטפים</option>
+															<option value={"8"}>אפידמיה</option>
 															<option value={"9"}>חילוץ</option>
 															<option value={"10"}>
 																נזק לתשתיות אחזקה / הח"י
@@ -1511,6 +1512,35 @@ const CarDataFormModalView = (match) => {
 														</>
 													)}
 
+													{/* אפידמיה */}
+
+													{data.typevent === "8" && (
+														<>
+															<div
+																style={{
+																	textAlign: "right",
+																	paddingTop: "10px",
+																}}
+															>
+																סוג האפידמיה
+															</div>
+															<FormGroup>
+																<Input
+																	type="select"
+																	name="apitype"
+																	value={data.apitype}
+																	onChange={handleChange}
+																	id="apidmia"
+																	disabled
+																>
+																	<option value={"0"}>בחר</option>
+																	<option value={"1"}>תפעולית</option>
+																	<option value={"2"}>אחזקתית</option>
+																</Input>
+															</FormGroup>
+														</>
+													)}
+
 													{/*//* -------------- חילוץ  ----------*/}
 
 													{data.typevent === "9" && (
@@ -1819,33 +1849,9 @@ const CarDataFormModalView = (match) => {
 																ללא נפגעים
 															</div>
 														</FormGroup>
-
-														<FormGroup
-															check
-															inline
-														>
-															<div
-																style={{
-																	textAlign: "right",
-																	paddingTop: "10px",
-																}}
-															>
-																<Input
-																	checked={data.nifga == 2}
-																	// placeholder="ללא נפגעים "
-																	name="nifga"
-																	type="radio"
-																	value="2"
-																	onChange={handleChange}
-																	disabled
-																/>
-																לא ידוע
-															</div>
-														</FormGroup>
-
 													</div>
 												</Form>
-												{data.nifga === "1" && (
+												{data.nifga > "0" && (
 													<>
 														<div>
 															{infohurtarray.map((p, index) => {
@@ -1902,9 +1908,6 @@ const CarDataFormModalView = (match) => {
 																							<option value={"מת"}>
 																								{"מת"}
 																							</option>
-																							<option value={"לא ידוע"}>
-																								{"לא ידוע"}
-																							</option>
 																						</Input>
 																					</div>
 																				</Col>
@@ -1940,7 +1943,6 @@ const CarDataFormModalView = (match) => {
 																							value={p.mikomhurt}
 																							type="number"
 																							placeholder="0"
-																							min="0"
 																							disabled
 																						/>
 																					</div>
@@ -2372,8 +2374,8 @@ const CarDataFormModalView = (match) => {
 															<option value={"0"}>בחר</option>
 															<option value={"1"}>תאונה</option>
 															<option value={"2"}>כשל טכני</option>
-															<option value={"3"}>טעות אנוש</option>
-															<option value={"4"}>לא ידוע</option>
+															<option value={"4"}>טעות אנוש</option>
+															<option value={"3"}>לא ידוע</option>
 														</Input>
 													</FormGroup>
 
@@ -2383,18 +2385,20 @@ const CarDataFormModalView = (match) => {
 														סוג הרק"ם
 													</div>
 													{cartypesfilterarray.map(
-														(cartypesfilterobject, index) => {
-															return (
-																<CarTypesFilterObject
-																	cartypesfilterobject={cartypesfilterobject}
-																	index={index}
-																	setCartypesfilterarray={
-																		setCartypesfilterarray
-																	}
-																/>
-															);
-														}
-													)}
+																(cartypesfilterobject, index) => {
+																	return (
+																		<CarTypesFilterObject
+																			cartypesfilterobject={
+																				cartypesfilterobject
+																			}
+																			index={index}
+																			setCartypesfilterarray={
+																				setCartypesfilterarray
+																			}
+																		/>
+																	);
+																}
+															)}
 
 													<div
 														style={{ textAlign: "right", paddingTop: "10px" }}
@@ -2595,34 +2599,10 @@ const CarDataFormModalView = (match) => {
 																ללא נפגעים
 															</div>
 														</FormGroup>
-
-														<FormGroup
-															check
-															inline
-														>
-															<div
-																style={{
-																	textAlign: "right",
-																	paddingTop: "10px",
-																}}
-															>
-																<Input
-																	checked={data.nifga == 2}
-																	// placeholder="ללא נפגעים "
-																	name="nifga"
-																	type="radio"
-																	value="2"
-																	onChange={handleChange}
-																	disabled
-																/>
-																לא ידוע
-															</div>
-														</FormGroup>
-
 													</div>
 												</Form>
 
-												{data.nifga === "1" && (
+												{data.nifga > "0" && (
 													<>
 														<div>
 															{infohurtarray.map((p, index) => {
@@ -2679,9 +2659,6 @@ const CarDataFormModalView = (match) => {
 																							<option value={"מת"}>
 																								{"מת"}
 																							</option>
-																							<option value={"לא ידוע"}>
-																								{"לא ידוע"}
-																							</option>
 																						</Input>
 																					</div>
 																				</Col>
@@ -2717,7 +2694,6 @@ const CarDataFormModalView = (match) => {
 																							value={p.mikomhurt}
 																							type="number"
 																							placeholder="0"
-																							min="0"
 																							disabled
 																						/>
 																					</div>

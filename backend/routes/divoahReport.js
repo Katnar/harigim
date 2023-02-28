@@ -193,10 +193,6 @@ router.route("/add").post((req, res) => {
 	const mikom = req.body.mikom;
 	const nifga = Number(req.body.nifga);
 	const hurtarray = req.body.hurtarray;
-	const totalWorkHours = ""
-	const totalCostWorkHours = ""
-	const damageCost =""
-	const spareCost = ""
 
 	const newReport = new Report({
 		name,
